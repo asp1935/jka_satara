@@ -70,18 +70,23 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 # Run Project
 
 1. Clone Git Repo
+
 git clone https://github.com/asp1935/jka_satara.git
 
 2. Install Dependencies
+
 composer install
 
 3. Generate App Key
+
 php artisan key:generate
 
 4. Set Up Database
+
 php artisan migrate --seed
 
 5. Run Laravel Server
+
 php artisan serve
 
 
