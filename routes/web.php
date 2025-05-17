@@ -4,12 +4,26 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
+/////////////////////// fontend routes /////////////////////////
+
+Route::get('/',[UserController::class,'home'])->name('home');
+Route::post('/add-contact', [Usercontroller::class, 'contact_us'])->name('contact_us');
+
+
+
+
 //////////////////// admin routes //////////////////////////
 
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index')->middleware('GuestAdmin');
 Route::post('/admin-login', [AdminController::class, 'Login'])->name('admin.login');
 Route::get('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout')->middleware('Admin');
 Route::get('/dashboard', [AdminController::class, 'Dashboard'])->name('admin.dashboard')->middleware('Admin');
+
+
+
+Route::get('/contact', [AdminController::class, 'contact'])->name('admin.contact')->middleware('Admin');
+Route::get('/delete-contact/{id}', [AdminController::class, 'delete_contact'])->name('admin.delete_contact')->middleware('Admin');
 
 
 
@@ -21,11 +35,6 @@ Route::get('/edit-slider/{id}', [AdminController::class, 'edit_Slider'])->name('
 Route::post('/update-slider', [AdminController::class, 'update_Slider'])->name('admin.update_slider')->middleware('Admin');
 Route::get('/delete-slider/{id}',[AdminController::class,'delete_Slider'])->name('admin.delete_slider')->middleware('Admin');
 
-
-
-/////////////////////// fontend routes /////////////////////////
-
-Route::get('/',[UserController::class,'home'])->name('home');
 
 
  

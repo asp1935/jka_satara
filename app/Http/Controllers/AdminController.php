@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Contact;
 use App\Models\Slider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -142,23 +143,36 @@ class AdminController extends Controller
         return redirect()->route('admin.add_slider')->with('success', 'Updated Successfully !');
     }
 
-   public function delete_Slider($id)
-{
-    $slider = Slider::find($id);
+    public function delete_Slider($id)
+    {
+        $slider = Slider::find($id);
 
-    if (!$slider) {
-        return redirect()->route('admin.add_slider')->with('error', 'Slider not found.');
+        if (!$slider) {
+            return redirect()->route('admin.add_slider')->with('error', 'Slider not found.');
+        }
+
+        $filePath = public_path('uploads/slider_images/' . $slider->image);
+
+        if (file_exists($filePath)) {
+            @unlink($filePath); // Suppress errors just in case
+        }
+
+        $slider->delete();
+
+        return redirect()->route('admin.add_slider')->with('success', 'Deleted successfully!');
+    }
+    
+    public function contact()
+    {
+        $contacts = Contact::all();
+
+        return view('admin.contact', compact('contacts'));
     }
 
-    $filePath = public_path('uploads/slider_images/' . $slider->image);
-
-    if (file_exists($filePath)) {
-        @unlink($filePath); // Suppress errors just in case
+    public function delete_contact($id)
+    {
+        $contact = Contact::find($id);
+        $contact->delete();
+        return redirect()->route('admin.contact')->with('success', 'Deleted Successfully !');
     }
-
-    $slider->delete();
-
-    return redirect()->route('admin.add_slider')->with('success', 'Deleted successfully!');
-}
-
 }

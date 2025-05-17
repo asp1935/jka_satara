@@ -33,7 +33,12 @@
         <li>
           <a href="{{ route('admin.add_slider') }}">
             <i class="bi bi-circle"></i><span>Add Slider</span>
-          </a>  
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('admin.contact') }}">
+            <i class="bi bi-circle"></i><span>Contact us </span>
+          </a>
         </li>
 
 
