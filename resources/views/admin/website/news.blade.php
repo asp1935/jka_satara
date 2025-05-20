@@ -21,7 +21,7 @@
         <main id="main" class="main">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Add Slider</h5>
+                    <h5 class="card-title">Add News</h5>
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             <ul class="mb-0">
@@ -38,7 +38,7 @@
                         </div>
                     @endif
                     <!-- Vertical Form -->
-                    <form class="row g-3" action="{{ route('admin.add_slider_post') }}" method="post"
+                    <form class="row g-3" action="{{ route('admin.add_news') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         {{-- <div class="col-12">
@@ -47,17 +47,17 @@
                         </div> --}}
 
                         <div class="col-12">
-                            <label for="sliderTitleIp" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="sliderTitleIp" name="title"
+                            <label for="newsTitleIp" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="newsTitleIp" name="title"
                                 placeholder="Enter Title" required>
                         </div>
                         <div class="col-12">
-                            <label for="sliderDescIp" class="form-label">Description</label>
-                            <textarea class="form-control" id="sliderDescIp" name="description"
-                                placeholder="Enter Desciption" required></textarea>
+                            <label for="newsDateIp" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="newsDateIp" name="date"
+                                placeholder="Selete Date" required>
                         </div>
                         <div class="col-12">
-                            <label for="inputNanme4" class="form-label">Slider Image</label>
+                            <label for="inputNanme4" class="form-label">news Image</label>
                             <input type="file" class="form-control" id="inputNanme4" name="image"
                                 accept="image/png, image/jpg, image/jpeg" required>
 
@@ -71,42 +71,41 @@
 
                 </div>
             </div>
-
             <section class="section">
                 <div class="row">
                     <div class="col-lg-12">
 
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Manage Slider</h5>
+                                <h5 class="card-title">Manage News</h5>
                                 <table class="table datatable">
                                     <thead>
                                         <tr>
                                             <th>Sr.no</th>
                                             <th>Image</th>
                                             <th>Title</th>
-                                            <th>Description</th>
+                                            <th>Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($sliders)
-                                            @foreach ($sliders as $id => $slider)
+                                        @if ($news)
+                                            @foreach ($news as $id => $single_news)
                                                 <tr>
                                                     <td>{{ $id + 1 }}</td>
 
-                                                    <td><img src="{{ asset('uploads/slider_images/' . $slider->image) }}"
-                                                            alt="image" height="30px" width="30px"> </td>
+                                                    <td><img src="{{ asset('uploads/news_images/' . $single_news->image) }}"
+                                                            alt="image" height="150" width="200"> </td>
                                                     <td>
-                                                        {{ $slider->title }}
+                                                        {{ $single_news->title }}
                                                     </td>
                                                     <td>
-                                                        <p>{{ $slider->description }}</p>
+                                                        <p>{{ $single_news->date }}</p>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('admin.edit_slider', $slider->id) }} "
+                                                        <a href="{{ route('admin.editNews',$single_news->id) }}"
                                                             class="btn btn-warning">Edit</a>
-                                                        <a href="{{ route('admin.delete_slider', $slider->id) }}"
+                                                        <a href="{{route('admin.deleteNews',$single_news->id) }}"
                                                             class="btn btn-danger">Delete</a>
                                                     </td>
 
@@ -124,4 +123,4 @@
 
         </main>
     </div>
-@endsection
+@endsection            

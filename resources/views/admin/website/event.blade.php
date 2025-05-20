@@ -21,7 +21,7 @@
         <main id="main" class="main">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Add Slider</h5>
+                    <h5 class="card-title">Add Event</h5>
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             <ul class="mb-0">
@@ -38,7 +38,7 @@
                         </div>
                     @endif
                     <!-- Vertical Form -->
-                    <form class="row g-3" action="{{ route('admin.add_slider_post') }}" method="post"
+                    <form class="row g-3" action="{{ route('admin.addEvent') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         {{-- <div class="col-12">
@@ -47,20 +47,24 @@
                         </div> --}}
 
                         <div class="col-12">
-                            <label for="sliderTitleIp" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="sliderTitleIp" name="title"
-                                placeholder="Enter Title" required>
+                            <label for="eventTitleIp" class="form-label">Title</label>
+                            <input type="text" class="form-control" id="eventTitleIp" name="title" placeholder="Enter Title"
+                                required>
                         </div>
                         <div class="col-12">
-                            <label for="sliderDescIp" class="form-label">Description</label>
-                            <textarea class="form-control" id="sliderDescIp" name="description"
-                                placeholder="Enter Desciption" required></textarea>
+                            <label for="eventDescIp" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="eventDescIp" name="description"
+                                placeholder="Enter Description" required>
                         </div>
                         <div class="col-12">
-                            <label for="inputNanme4" class="form-label">Slider Image</label>
-                            <input type="file" class="form-control" id="inputNanme4" name="image"
-                                accept="image/png, image/jpg, image/jpeg" required>
-
+                            <label for="eventDateIp" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="eventDateIp" name="date" placeholder="Selete Date"
+                                required>
+                        </div>
+                        <div class="col-12">
+                            <label for="eventCityIp" class="form-label">City</label>
+                            <input type="text" class="form-control" id="eventCityIp" name="city" placeholder="Enter City"
+                                required>
                         </div>
 
                         <div class="text-center">
@@ -71,42 +75,47 @@
 
                 </div>
             </div>
-
             <section class="section">
                 <div class="row">
                     <div class="col-lg-12">
 
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Manage Slider</h5>
+                                <h5 class="card-title">Manage Events</h5>
                                 <table class="table datatable">
                                     <thead>
                                         <tr>
                                             <th>Sr.no</th>
-                                            <th>Image</th>
                                             <th>Title</th>
                                             <th>Description</th>
+                                            <th>Date</th>
+                                            <th>City</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($sliders)
-                                            @foreach ($sliders as $id => $slider)
+                                        @if ($events)
+                                            @foreach ($events as $id => $event)
                                                 <tr>
                                                     <td>{{ $id + 1 }}</td>
 
-                                                    <td><img src="{{ asset('uploads/slider_images/' . $slider->image) }}"
-                                                            alt="image" height="30px" width="30px"> </td>
+                                                    
                                                     <td>
-                                                        {{ $slider->title }}
+                                                        {{ $event->title }}
+                                                    </td>
+                                                     <td>
+                                                        {{ $event->description }}
                                                     </td>
                                                     <td>
-                                                        <p>{{ $slider->description }}</p>
+                                                        <p>{{ $event->date }}</p>
+                                                    </td>
+                                                     <td>
+                                                        {{ $event->city }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('admin.edit_slider', $slider->id) }} "
+                                                        <a href="{{ route('admin.editEvent', $event->id) }}"
                                                             class="btn btn-warning">Edit</a>
-                                                        <a href="{{ route('admin.delete_slider', $slider->id) }}"
+                                                        <a href="{{route('admin.deleteEvent', $event->id) }}"
                                                             class="btn btn-danger">Delete</a>
                                                     </td>
 

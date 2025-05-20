@@ -3,6 +3,10 @@
 /public/build
 /public/hot
 /public/storage
+/public/upload/news_images
+/public/upload/slider_images
+/public/upload/student_images
+
 /storage/*.key
 /storage/pail
 /vendor
