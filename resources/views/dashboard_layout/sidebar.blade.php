@@ -46,11 +46,16 @@
           </a>
         </li>
         <li>
+          <a href="{{ route('admin.syllabus') }}">
+            <i class="bi bi-circle"></i><span>Add Syllabus </span>
+          </a>
+        </li>
+        <li>
           <a href="{{ route('admin.contact') }}">
             <i class="bi bi-circle"></i><span>Contact us </span>
           </a>
         </li>
-        
+
 
 
       </ul>

@@ -56,6 +56,11 @@ Route::put('/update-event', [AdminController::class, 'updateEvent'])->name('admi
 Route::get('/delete-event/{id}', [AdminController::class, 'deleteEvent'])->name('admin.deleteEvent')->middleware('Admin');
 
 
+//////////////////////////Syllabus Routes/////////////////////////////
+
+Route::get('/syllabus', [AdminController::class, 'syllabus'])->name('admin.syllabus')->middleware('Admin');
+Route::post('/upsert-syllabus', [AdminController::class, 'upsertSyllabus'])->name('admin.upsertSyllabus')->middleware('Admin');
+Route::get('/delete-event', [AdminController::class, 'deleteSyllabus'])->name('admin.deleteSyllabus')->middleware('Admin');
 
 
 //////////////////////////Student Routes/////////////////////////////

@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\News;
 use App\Models\Slider;
 use App\Models\Student;
+use App\Models\Syllabus;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class AdminController extends Controller
     public function add_Slider()
     {
         $sliders = Slider::all();
-        return view('admin.addSlider', compact('sliders'));
+        return view('admin.website.slider.addSlider', compact('sliders'));
     }
 
     public function add_Slider_Post(Request $request)
@@ -87,7 +88,7 @@ class AdminController extends Controller
     public function edit_Slider($id)
     {
         $slider = Slider::find($id);
-        return view('admin.editSlider', compact('slider'));
+        return view('admin.website.slider.editSlider', compact('slider'));
     }
 
     public function update_Slider(Request $request)
@@ -170,7 +171,7 @@ class AdminController extends Controller
     public function event()
     {
         $events = Event::all();
-        return view('admin.website.event', compact('events'));
+        return view('admin.website.event.event', compact('events'));
     }
 
     public function addEvent(Request $request)
@@ -195,7 +196,7 @@ class AdminController extends Controller
     public function editEvent($id)
     {
         $event = Event::find($id);
-        return view('admin.website.editEvent', compact('event'));
+        return view('admin.website.event.editEvent', compact('event'));
     }
 
     public function updateEvent(Request $request)
@@ -239,7 +240,7 @@ class AdminController extends Controller
     public function news()
     {
         $news = News::all();
-        return view('admin.website.news', compact('news'));
+        return view('admin.website.news.news', compact('news'));
     }
 
     public function addNews(Request $request)
@@ -268,7 +269,7 @@ class AdminController extends Controller
     public function editNews($id)
     {
         $news = News::find($id);
-        return view('admin.website.editNews', compact('news'));
+        return view('admin.website.news.editNews', compact('news'));
     }
 
     public function updateNews(Request $request)
@@ -330,6 +331,68 @@ class AdminController extends Controller
 
         return redirect()->route('admin.news')->with('success', 'Deleted successfully!');
     }
+
+    ////////////////////// syllabus controllers////////////////////
+
+    public function syllabus()
+    {
+        $syllabus = Syllabus::find(1);
+        return view('admin.website.syllabus.upsertSyllabus', compact('syllabus'));
+    }
+    public function upsertSyllabus(Request $request)
+    {
+        // Validate request
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'file' => 'nullable|file|mimes:pdf|max:5120', // max 5MB
+        ]);
+
+        // Find syllabus with ID = 1 or create new instance with ID=1
+        $syllabus = Syllabus::find(1);
+
+        if (!$syllabus) {
+            $syllabus = new Syllabus();
+            $syllabus->id = 1; // set fixed ID
+        }
+
+
+
+        $syllabus->name = $request->name;
+
+        if ($request->hasFile('file')) {
+            $filePath = public_path() . '/uploads/syllabus/' . $syllabus->syllabus;
+            if (file_exists($filePath)) {
+                @unlink($filePath);
+            }
+            $syllabus_pdf = $request->file('file');
+            $extension = $syllabus_pdf->getClientOriginalExtension();
+            $name = time() . "_syllabus." . $extension;
+            $destinationPath = public_path() . '/uploads/syllabus/';
+            $syllabus_pdf->move($destinationPath, $name);
+            $path_new = $name;
+
+            $syllabus->syllabus = $path_new;
+        }
+
+        $syllabus->save();
+
+        return redirect()->back()->with('success', 'Syllabus saved successfully!');
+    }
+
+    public function deleteSyllabus()
+    {
+        $syllabus = Syllabus::find(1);
+        if (!$syllabus) {
+            return redirect()->back()->with('success', 'Syllabus Already Deleted!');
+        }
+        $filePath = public_path() . '/uploads/syllabus/' . $syllabus->syllabus;
+        if (file_exists($filePath)) {
+            @unlink($filePath);
+        }
+        $syllabus->delete();
+        return redirect()->back()->with('success', 'Syllabus Deleted!');
+    }
+
     ////////////////////// contact controllers////////////////////
 
     public function contact()
